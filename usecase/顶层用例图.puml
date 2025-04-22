@@ -1,0 +1,40 @@
+、@startuml
+ actor 顾客 as Customer
+ actor 收银员 as Cashier
+ actor 洗衣员 as Cleaner
+ actor 店长 as Manager
+
+ Customer --> (注册会员)
+ Customer --> (登录系统)
+ Customer --> (查看订单状态)
+ Customer --> (支付订单)
+ Customer --> (评价服务)
+
+ Cashier --> (登录系统)
+ Cashier --> (帮助顾客注册会员)
+ Cashier --> (为顾客下单)
+ Cashier --> (接收付款)
+ Cashier --> (交接衣物)
+ Cashier --> (更新订单为“待取走”)
+ Cashier --> (记录取衣信息)
+
+ Cleaner --> (处理衣物清洗)
+ Cleaner --> (熨烫衣物)
+ Cleaner --> (更新订单状态)
+
+ Manager --> (登录系统)
+ Manager --> (员工管理)
+ Manager --> (订单管理)
+ Manager --> (衣物管理)
+ Manager --> (会员管理)
+ Manager --> (活动管理)
+ Manager --> (经营统计分析)
+ Manager --> (对接第三方优惠平台)
+
+ (活动管理) .down.> (对接第三方优惠平台) : <<extend>>
+ (为顾客下单) .down.> (选择衣物类型) : <<include>>
+ (为顾客下单) .down.> (选择服务类型) : <<include>>
+ (为顾客下单) .down.> (计算价格) : <<include>>
+ (为顾客下单) .down.> (设置预计取衣时间) : <<include>>
+ (接收付款) .down.> (使用优惠券抵扣) : <<extend>>
+ @enduml

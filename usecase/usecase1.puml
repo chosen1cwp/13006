@@ -1,0 +1,27 @@
+@startuml
+title <color:red><b>图 2.2 用例“创建订单”细化图</b></color>
+actor 收银员
+actor 客户
+
+rectangle "创建订单" {
+  usecase "选择会员" as U0
+  usecase "选择衣物种类" as U1
+  usecase "选择服务类型" as U2
+  usecase "系统计算价格和给出预计取货时间" as U3
+  usecase "订单信息告知客户&客户确认无误" as U4
+  usecase "扣减账户金额并创建订单" as U5
+}
+
+收银员 --> U0
+收银员 --> U1
+收银员 --> U2
+
+客户 --> U4
+收银员 --> U5
+
+U0 --> U3 : <<include>>
+U1 --> U3 : <<include>>
+U2 --> U3 : <<include>>
+U3 --> U4 : <<include>>
+U4 --> U5 : <<include>>
+@enduml

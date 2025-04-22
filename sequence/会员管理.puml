@@ -1,0 +1,42 @@
+@startuml
+title <color:red><b>5.3.1 时序图：会员管理</b></color>
+
+actor 客户
+participant "会员界面" as UI
+participant "会员控制器" as Controller
+participant "会员服务" as Service
+participant "会员数据库" as DB
+
+客户 -> UI : 打开注册页面
+UI -> Controller : 提交注册信息
+Controller -> Service : validateRegisterInfo()
+Service -> DB : insertNewMember()
+DB --> Service : 注册成功
+Service --> Controller : 注册状态
+Controller --> UI : 显示注册结果
+UI --> 客户 : 提示注册成功
+
+客户 -> UI : 登录
+UI -> Controller : 提交登录信息
+Controller -> Service : validateLogin()
+Service -> DB : queryMemberInfo()
+DB --> Service : 会员信息
+Service --> Controller : 登录结果
+Controller --> UI : 显示登录成功
+UI --> 客户 : 进入会员中心
+
+客户 -> UI : 查看会员信息
+UI -> Controller : getMemberProfile()
+Controller -> Service : fetchProfile()
+Service -> DB : select * from member
+DB --> Service : 返回信息
+Service --> Controller : 返回数据
+Controller --> UI : 展示个人信息
+UI --> 客户 : 显示信息
+
+客户 -> UI : 退出登录
+UI -> Controller : logout()
+Controller -> Service : clearSession()
+Service --> Controller : 成功
+Controller --> UI : 返回首页
+@enduml

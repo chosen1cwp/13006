@@ -1,0 +1,19 @@
+@startuml
+actor 收银员
+participant "会员界面" as UI
+participant "会员服务" as Service
+participant "数据库(会员)" as DB
+
+收银员 -> UI : 提交客户会员的注册信息
+UI -> Service : register(info)
+Service -> DB : insert(info)
+DB --> Service : insert successful
+Service --> UI : 会员注册成功
+
+收银员 -> UI : 请求充值金额300元
+UI -> Service : recharge(memberId, 300)
+Service -> DB : updateBalance(+300)
+DB --> Service : update successful
+Service --> UI : 充值成功
+@enduml
+

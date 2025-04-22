@@ -1,0 +1,14 @@
+@startuml
+title <color:red><b>4.1.5 用例“取货”细化图</b></color>
+
+actor 顾客 as Customer
+actor 收银员 as Cashier
+
+Customer --> (领取衣物)
+Cashier --> (取货登记)
+
+(取货登记) --> (更新订单状态为已取走) : <<include>>
+(取货登记) --> (判断是否本人取货)
+
+(判断是否本人取货) --> (非本人取货，记录取货人信息) : <<extend>>
+@enduml

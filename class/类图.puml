@@ -1,0 +1,115 @@
+@startuml
+title <color:red><b>5.2.2 UML 类图</b></color>
+
+' 定义参与者类
+class User {
+  +id: String
+  +name: String
+  +sex: String
+  +birthday: Date
+  +email: String
+  +phone: String
+  +password: String
+  +register_time: Date
+  +last_login_time: Date
+  +createTime: Date
+  +updateTime: Date
+}
+
+User <|-- Customer
+User <|-- Staff
+Staff <|-- Cashier
+Staff <|-- Cleaner
+User <|-- Manager
+
+' 客户类
+class Customer {
+  +register()
+  +login()
+  +placeOrder(): Order
+  +trackOrderStatus()
+  +makePayment()
+  +giveFeedback()
+}
+
+' 员工类
+class Staff {
+  +login()
+}
+
+class Cashier {
+  +confirmPickup(orderId, isSelf: Boolean, name?, phone?)
+  +applyDiscount(orderId, couponId)
+}
+
+class Cleaner {
+  +processLaundry(orderId)
+  +updateOrderStatus(orderId, status)
+}
+
+class Manager {
+  +manageStaff()
+  +manageOrder()
+  +managePromotions()
+  +generateReport()
+}
+
+' 订单类
+class Order {
+  +id: String
+  +status: String
+  +createTime: Date
+  +updateTime: Date
+  +paymentStatus: String
+  +pickupStatus: String
+  +assignStaff()
+  +addClothingItem(item: ClothingItem)
+  +applyCoupon(coupon: Coupon)
+}
+
+' 衣物类
+class ClothingItem {
+  +id: String
+  +type: String
+  +color: String
+  +serviceType: ServiceType
+}
+
+' 服务类型
+class ServiceType {
+  +id: String
+  +name: String
+  +price: double
+}
+
+' 优惠券类
+class Coupon {
+  +id: String
+  +type: String
+  +amount: Double
+  +validFrom: Date
+  +validTo: Date
+  +platformId: String
+}
+
+' 第三方平台类
+class ThirdPartyPlatform {
+  +id: String
+  +name: String
+  +apiEndpoint: String
+  +accessToken: String
+  +verifyConnection(): Boolean
+}
+
+' 关联关系
+Customer "1" --> "0..*" Order
+Order "1" --> "1..*" ClothingItem
+ClothingItem --> ServiceType
+Order --> Coupon : 使用
+Coupon --> ThirdPartyPlatform : 来源平台
+Cashier --> Order : 管理订单取货
+Cleaner --> Order : 处理订单
+Manager --> Staff : 管理
+Manager --> Order : 管理
+Manager --> Coupon : 发布优惠
+@enduml

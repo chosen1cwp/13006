@@ -1,0 +1,12 @@
+@startuml
+title <color:red><b>4.1.4 用例“活动管理”细化图</b></color>
+
+actor 店长 as Manager
+
+Manager --> (活动管理)
+
+(活动管理) --> (创建优惠券) : <<include>>
+(活动管理) --> (配置优惠条件) : <<include>>
+(活动管理) --> (设置有效期) : <<include>>
+(活动管理) --> (对接第三方优惠平台) : <<extend>>
+@enduml

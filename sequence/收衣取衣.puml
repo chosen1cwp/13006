@@ -1,0 +1,46 @@
+@startuml
+title <color:red><b>5.3.2 时序图：收衣取衣管理</b></color>
+
+actor 收银员
+actor 客户
+participant "收衣界面" as 收UI
+participant "订单控制器" as 控制器
+participant "订单服务" as 服务
+participant "订单数据库" as 订单DB
+
+客户 -> 收银员 : 交付衣物
+收银员 -> 收UI : 输入衣物信息、客户手机号
+收UI -> 控制器 : createOrder()
+控制器 -> 服务 : validateOrderInfo()
+服务 -> 订单DB : insertOrder()
+订单DB --> 服务 : 返回订单ID
+服务 --> 控制器 : 创建成功
+控制器 --> 收UI : 显示订单详情
+
+== 客户取衣流程 ==
+
+客户 -> 收银员 : 提供手机号 / 订单号
+收银员 -> 收UI : 查询订单
+收UI -> 控制器 : getOrderStatus()
+控制器 -> 服务 : fetchOrder()
+服务 -> 订单DB : select by orderId
+订单DB --> 服务 : 返回订单
+服务 --> 控制器 : 返回数据
+控制器 --> 收UI : 显示订单状态
+
+收银员 -> 客户 : 是否为本人？
+alt 本人取衣
+收银员 -> 收UI : 标记为本人取衣
+else 代取
+收银员 -> 客户 : 记录姓名和手机号
+收银员 -> 收UI : 填写代取人信息
+end
+
+收UI -> 控制器 : updateOrderStatus("已取走")
+控制器 -> 服务 : updateStatus()
+服务 -> 订单DB : update status where id=?
+订单DB --> 服务 : 更新成功
+服务 --> 控制器 : 成功
+控制器 --> 收UI : 提示已完成
+收UI --> 收银员 : 完成订单
+@enduml

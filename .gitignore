@@ -1,0 +1,34 @@
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.fseventsd
+
+# 编辑器配置文件
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PlantUML 生成的图像和文件（如果不想加入版本控制）
+*.png
+*.svg
+#*.pdf
+*.eps
+*.utxt
+*.html
+
+# 临时文件和日志
+*.log
+*.tmp
+~$*
+
+# 如果你用 Make 或自动化脚本生成文件
+output/
+build/
+dist/
+

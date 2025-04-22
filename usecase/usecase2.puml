@@ -1,0 +1,16 @@
+@startuml
+actor 顾客
+actor 收银员
+
+rectangle "取衣确认子系统" {
+  usecase "身份验证" as V1
+  usecase "记录代取信息" as V2
+  usecase "标记订单已取" as V3
+}
+
+顾客 --> V1
+V1 --> V2 : <<extend>>
+V1 --> V3 : <<include>>
+收银员 --> V2
+收银员 --> V3
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+title <color:red><b>4.1.1 系统顶层用例图</b></color>
+
+actor 客户
+actor 收银员
+actor 洗衣员
+actor 店长
+
+rectangle 干洗店洗衣管理系统 {
+  usecase "注册会员" as UC1
+  usecase "会员充值" as UC2
+  usecase "创建订单" as UC3
+  usecase "处理订单" as UC4
+  usecase "退款处理" as UC4_1
+  usecase "清洗处理" as UC5
+  usecase "取货确认" as UC6
+  usecase "会员管理" as UC7
+  usecase "订单管理" as UC8
+  usecase "活动管理" as UC9
+  usecase "权限管理" as UC10
+  usecase "经营管理" as UC11
+  usecase "第三方平台优惠券对接" as UC9_1
+}
+
+客户 --> UC1
+客户 --> UC2
+客户 --> UC3
+客户 --> UC6
+收银员 --> UC1
+收银员 --> UC2
+收银员 --> UC3
+收银员 --> UC4
+收银员 --> UC6
+洗衣员 --> UC5
+店长 --> UC7
+店长 --> UC8
+店长 --> UC9
+店长 --> UC10
+店长 --> UC11
+
+UC3 --> UC2 : <<include>>
+UC4 --> UC4_1 : <<extend>>
+UC4 --> UC5 : <<include>>
+UC6 --> UC8 : <<extend>>
+UC9 --> UC9_1 : <<extend>>
+
+note top of UC10
+  RBAC（Role-Based Access Control）模式
+  每个角色有不同的菜单权限
+  菜单权限的管理由店长管理
+end note
+
+note top of UC11
+  统计分析
+  包括订单统计、会员统计、
+  服务统计、优惠活动统计等。
+end note
+
+note bottom of UC5
+  洗衣员进行洗衣处理，
+  包括清洗、熨烫、修补、保养等。
+end note
+
+note bottom of UC9_1
+  店长在“活动管理”中可通过扩展用例“对接第三方平台优惠券”
+  来接入美团、大众点评等平台，
+  实现在第三方平台上发放与核销优惠券功能。
+end note
+@enduml

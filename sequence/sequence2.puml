@@ -1,0 +1,22 @@
+@startuml
+actor 收银员
+participant "会员界面" as UI
+participant "订单服务" as OrderService
+participant "数据库(订单)" as OrderDB
+
+收银员 -> UI : 创建订单(衣物信息)
+UI -> OrderService : createOrder(memberId, itemList)
+OrderService -> OrderDB : insert(orderInfo)
+OrderDB --> OrderService : insert successful
+OrderService --> UI : 返回订单编号
+
+收银员 -> 清洗服务 : 通知进行清洗服务
+
+收银员 -> UI : 完成清洗服务后订单置为：待取走
+UI -> OrderService : updateStatus(orderId, "待取走")
+OrderService -> OrderDB : update(order)
+
+客户 -> 收银员 : 预计时间后来店中取衣物
+收银员 -> UI : 确认身份&记录取货人信息，更新状态为：已取走
+UI -> OrderService : updateStatus(orderId, "已取走")
+@enduml

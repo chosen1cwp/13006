@@ -1,0 +1,78 @@
+@startuml
+title <color:red><b>3.1.2 干洗店洗衣业务流程UML活动图</b></color>
+
+skinparam activity {
+  StartColor Blue
+  EndColor Red
+  BorderColor Orange
+}
+skinparam classFontSize 33
+
+|客户|
+start
+:到店;
+
+note right
+客户携带需要进行清洗
+的衣物、鞋子等来到店里
+end note
+
+|收银员|
+if (判断是否是首次来?) then (是)
+  :注册系统会员;
+  :建立会员档案;
+  :充值对应金额;
+else (否)
+endif
+
+#Yellow:操作下单;
+:选择会员&清洗的物品种类&服务类型;
+note right: 选择如“白银+西服+干洗”或“黑金+皮鞋+保养”等的服务
+:计算服务价格&给出预计取货时间;
+
+note left
+* 系统会根据当前会员的等级、积分、
+待清洗物品种类以及服务类型按照系统
+设定好的价格表自动计算出总金额；
+* 根据待清洗物品的种类、数量及
+服务类型给出预计的取货时间；
+end note
+:订单详情告知客户;
+|客户|
+:客户确认无误;
+note right: 客户对订单信息进行核对&确认
+|收银员|
+#Yellow:完成下单操作;
+note right: 收银员录入订单信息，同时生成订单记录
+
+:扣减会员账户金额;
+note right: 从客户会员账户中自动扣款，若金额不足则提示客户先充值
+#Cyan:订单状态置为“清洗中”;
+
+|洗衣员|
+:接收衣物;
+note right
+收银员将待清洗衣物交接到洗衣员手中
+end note
+:清洗、熨烫、修补、保养;
+note right
+洗衣员按照订单信息中的服务类型
+来完成清洗、熨烫、修补、保养等服务
+end note
+#Cyan:订单状态置为“待取走”;
+
+|客户|
+:客户取衣;
+note right
+客户在预计取衣时间后
+来店中取走衣物
+end note
+|收银员|
+if (判断取货人是否是本人?) then (是)
+else (否)
+  :记录取货人姓名和手机号码;
+endif
+#Cyan:订单状态置为“已取走”;
+
+stop
+@enduml

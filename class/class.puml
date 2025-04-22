@@ -1,0 +1,74 @@
+@startuml
+title <color:red><b>图 3.1 干洗店洗衣管理系统类图</b></color>
+class Customer {
+  -id: Int
+  -name: String
+  -sex: String
+  -birthday: Date
+  -phone: String
+  -email: String
+  -password: String
+  -address: String
+  -level: String
+  -balance: Double
+  +recharge(amount: Double)
+  +deduct(amount: Double)
+}
+
+class Order {
+  -id: Int
+  -customerId: String
+  -itemList: List<Item>
+  -status: String
+  -totalPrice: Double
+  -expectedPickupDate: Date
+  +calculatePrice(): Double
+  +updateStatus(status: String)
+}
+
+class OrderItem {
+  -id: Int
+  -type: String
+  -serviceType: String
+  -price: Double
+  -quantity: int
+}
+
+class User {
+  -id: Int
+  -name: String
+  -sex: String
+  -birthday: Date
+  -employmentDate: Date
+  -role: String
+  -phone: String
+  -password: String
+}
+
+class Coupon {
+  -id: Int
+  -description: String
+  -discountAmount: Double
+  -validUntil: Date
+  +isValid(): Boolean
+}
+
+class Activity {
+  -id: Int
+  -type: String
+  -details: String
+  +apply(customer: Customer)
+}
+
+class Statistic {
+  +generateRevenueReport(period: String)
+  +generateCustomerProfile(customerId: String)
+  +couponStatisticsAnalysis(period: String)
+}
+
+Customer "1" --> "*" Order
+Order --> "*" OrderItem
+Customer --> "*" Coupon
+Customer --> "*" Activity
+User --> Order : 处理
+@enduml

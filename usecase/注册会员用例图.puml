@@ -1,0 +1,14 @@
+@startuml
+title <color:red><b>4.1.2 用例“注册会员”细化图</b></color>
+
+actor 客户 as Customer
+actor 收银员 as Cashier
+
+Customer --> (注册会员)
+Cashier --> (帮助客户注册会员)
+
+(注册会员) --> (填写基础信息) : <<include>>
+(注册会员) --> (设置密码) : <<include>>
+(注册会员) --> (创建会员档案) : <<include>>
+(注册会员) --> (账户充值) : <<extend>>
+@enduml
